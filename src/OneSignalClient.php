@@ -136,6 +136,23 @@ class OneSignalClient
         $this->headers['verify'] = false;
         return $this->post("notifications");
     }
+    
+     /**
+     * Add devices
+     * https://documentation.onesignal.com/reference#add-a-device
+     * @param array $parameters
+     * @return mixed
+     */
+    public function addDevice($parameters = []){
+        $this->requiresAuth();
+        $this->usesJSON();
+        
+        // Make sure to use app_id
+        $parameters['app_id'] = $this->appId;
+    
+        $this->headers['body'] = json_encode($parameters);
+        return $this->post("players");
+    }
 
     public function post($endPoint) {
         return $this->client->post(self::API_URL."/".$endPoint, $this->headers);
